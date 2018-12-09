@@ -1,0 +1,119 @@
+#importing libraries 
+import numpy as np 
+import pandas as pd
+import matplotlib.pyplot as plt 
+import seaborn as sns
+from scipy.stats import mode
+
+#awesome fearture of matplot to avoid this line plt.show()
+%matplotlib inline
+
+#reading csv file using pandas
+us = pd.read_csv('Usadata_modified.csv')
+
+
+us.head()
+#NOTE:- This is a fake data 
+#I need to start with something basic
+#Let me start with explaining with what this data is
+
+index_names=["Avg. Area Income","Avg. Area House Age","Avg. Area Number of Rooms",
+           "Avg. Area Number of Bedrooms","Area Population","Price","Address"]
+Type_dict=["Numerical(Continuous)","Numerical(Discrete)","Numerical(Discrete)",
+           "Numerical(Discrete)","Numerical(Continuous)","Numerical(Continuous)",
+           "Categorical"]
+
+Measurment_level_dict=["Quantative(Ratio)","Quantative(Ratio)",
+                       "Quantative(Ratio)","Quantative(Ratio)",
+                       "Quantative(Ratio)","Quantative(Ratio)",
+                       "Qualitiaive(Nominal)"]
+
+dataa={'Type':Type_dict,'Measurment level':Measurment_level_dict}
+
+pd.DataFrame(dataa,index=index_names)
+
+#checking how the data looks
+us.head()
+
+# Starting with data analysis 
+# It is important to look at all the statistical terms while doing the analysis
+# We will create a dataframe using pandas which will give us all the statistical values for the data
+# This dataframe will contain mean, median, mode, standard deviation
+
+# Calculating the statistical values using numpy and scipy.stats
+a1 = np.mean(us['Avg. Area Income'])
+a2 = np.median(us['Avg. Area Income'])
+a3 = mode(us['Avg. Area Income'])
+a4 = np.std(us['Avg. Area Income'])
+
+b1 = np.mean(us['Avg. Area House Age'])
+b2 = np.median(us['Avg. Area House Age'])
+b3 = mode(us['Avg. Area House Age'])
+b4 = np.std(us['Avg. Area House Age'])
+
+c1 = np.mean(us['Avg. Area Number of Rooms'])
+c2 = np.median(us['Avg. Area Number of Rooms'])
+c3 = mode(us['Avg. Area Number of Rooms'])
+c4 = np.std(us['Avg. Area Number of Rooms'])
+
+d1 = np.mean(us['Avg. Area Number of Bedrooms'])
+d2 = np.median(us['Avg. Area Number of Bedrooms'])
+d3 = mode(us['Avg. Area Number of Bedrooms'])
+d4 = np.std(us['Avg. Area Number of Bedrooms'])
+
+e1 = np.mean(us['Area Population'])
+e2 = np.median(us['Area Population'])
+e3 = mode(us['Area Population'])
+e4 = np.std(us['Area Population'])
+
+f1 = np.mean(us['Price'])
+f2 = np.median(us['Price'])
+f3 = mode(us['Price'])
+f4 = np.std(us['Price'])
+
+mean=[a1,b1,c1,d1,e1,f1]
+median=[a2,b2,c2,d2,e2,f2]
+mode = [a3,b3,c3,d3,e3,f3]
+std = [a4,b4,c4,d4,e4,f4]
+
+#Creating a dictionary
+
+stat_values= {
+    'Mean': mean,
+    'Median': median,
+    'Mode': mode,
+    'Standard Deviation' : std
+}
+
+stat_info=pd.DataFrame(stat_values)
+
+#Changing how the format appears in DataFrame
+stat_info['Mean'] = stat_info['Mean'].apply(lambda x:'{:2}'.format(x))
+stat_info['Median'] = stat_info['Median'].apply(lambda x:'{:2}'.format(x))
+
+stat_info['Standard Deviation'] = stat_info['Standard Deviation'].apply(lambda x:'{:2}'.format(x))
+
+# Ananlyzing co-realtion between each column using seaborn
+Var_Corr = us.drop(['Unnamed: 0'],axis=1).corr()
+# plot the heatmap and apply annotation on it
+sns.heatmap(Var_Corr, xticklabels=Var_Corr.columns, yticklabels=Var_Corr.columns, annot=True,cmap='coolwarm')
+
+# importing library to calculate confidence interval
+import scipy.stats as st
+
+
+# A simple function which can calcuate confidence interval of 95% of anything from the data
+def conf(any_val):
+        print('confidence interval of price for 95% is'+str(st.norm.interval(0.95, loc=np.mean(any_val), scale=st.sem(any_val))))
+#Example confidence interval for House Age
+
+        
+
+conf(us['Avg. Area House Age'])
+# So with 95%confidence the House Age will fall from 5.9 to 6
+# Remember this data is fake so don't worry about the values
+
+#That's it for statistical analysis
+#I will do hypothesis test on real data set soon
+#I'll do the visual analysis on Tableau
+#Ty
