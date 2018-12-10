@@ -10,7 +10,7 @@ I am just beginning with data science so for now I am using a fake data to do an
 7) Confidence interval (95%)
 8) Correlation coefficient
 
-##Python libraries used
+## Python libraries used
 1) numpy
 2) pandas
 3) seaborn
