@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import mode
 
-#awesome fearture of matplot to avoid this line plt.show()
+#awesome fearture of jupyter notebook to avoid this line plt.show()
 %matplotlib inline
 
 #reading csv file using pandas
